@@ -44,7 +44,7 @@ sudo apt-get install maven
 wget https://github.com/darkstilo/BTC/archive/v0.8.1.1-malthraxcrypto.tar.gz -O v0.8.1.1-malthraxcrypto.tar.gz
 
 tar -xzvf v0.8.1.1-malthraxcrypto.tar.gz
-cd stratum-proxy-0.8.1-malthraxcrypto
+cd stratum-proxy-0.8.1.1-malthraxcrypto
 mvn clean package
 cd target
 
