@@ -41,9 +41,9 @@ sudo apt-get install maven
 
 # [ Stratum Proxy ]
 
-wget https://github.com/darkstilo/BTC/archive/v0.8.1.1-malthraxcrypto.tar.gz -O v0.8.1-malthraxcrypto.tar.gz
+wget https://github.com/darkstilo/BTC/archive/v0.8.1.1-malthraxcrypto.tar.gz -O v0.8.1.1-malthraxcrypto.tar.gz
 
-tar -xzvf v0.8.1-malthraxcrypto.tar.gz
+tar -xzvf v0.8.1.1-malthraxcrypto.tar.gz
 cd stratum-proxy-0.8.1-malthraxcrypto
 mvn clean package
 cd target
@@ -61,4 +61,4 @@ sed -i "s/\"apiPassword\":.*/\"apiPassword\"\: \"${senha}\"\,/" stratum-proxy-ye
 
 # Executa o proxy
 
-java -jar stratum-proxy-0.8.1-malthraxcrypto.jar --conf-file=stratum-proxy-yescrypt.conf
+java -jar stratum-proxy-0.8.1.1-malthraxcrypto.jar --conf-file=stratum-proxy-yescrypt.conf
