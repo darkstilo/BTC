@@ -41,14 +41,14 @@ sudo apt-get install maven
 
 # [ Stratum Proxy ]
 
-wget https://github.com/darkstilo/BTC/archive/v0.8.1.1-malthraxcrypto.tar.gz -O v0.8.1.1-malthraxcrypto.tar.gz
+wget https://github.com/darkstilo/stratum-proxy/archive/v0.8.1.1-malthraxcrypto.tar.gz -O v0.8.1.1-malthraxcrypto.tar.gz
 
 tar -xzvf v0.8.1.1-malthraxcrypto.tar.gz
-cd BTC-0.8.1.1-malthraxcrypto
+cd stratum-proxy-0.8.1.1-malthraxcrypto
 mvn clean package
 cd target
 
-wget https://github.com/darkstilo/BTC/releases/download/v0.8.1.1-malthraxcrypto/stratum-proxy-yescrypt.conf -O stratum-proxy-yescrypt.conf
+wget https://github.com/darkstilo/stratum-proxy/releases/download/v0.8.1.1-malthraxcrypto/stratum-proxy-yescrypt.conf -O stratum-proxy-yescrypt.conf
 
 # Convert formato dos2unix
 # awk '{printf "%s\r\n", $0}' stratum-proxy-yescrypt.conf
