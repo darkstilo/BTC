@@ -61,4 +61,4 @@ sed -i "s/\"apiPassword\":.*/\"apiPassword\"\: \"${senha}\"\,/" stratum-proxy-ye
 
 # Executa o proxy
 
-java -jar stratum-proxy-0.8.1.1-malthraxcrypto.jar --conf-file=stratum-proxy-yescrypt.conf
+java -jar stratum-proxy-0.8.1-malthraxcrypto.jar --conf-file=stratum-proxy-yescrypt.conf
