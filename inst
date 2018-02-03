@@ -56,3 +56,4 @@ starts ${algoritimo} ${stratum} ${core} 0
 fi
 }
 __ini__ "$1" "$2" "$3" "$4"
+echo -ne "\033[0m"
