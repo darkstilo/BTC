@@ -4,43 +4,16 @@ clear
 # SSH TLS
 # Miner por: noncepool
 #MINERADOR  ZPOOL BY: FENIX_LINUX
-bash=$(echo $BASH)
+#EDITED BY: 8TH.
 
+starts () {
+#COLETANDO VARIAVEIS
+algoritimo="$1"
+stratum="$2"
+core="$3"
+cpulimit="$4"
 
-if [ "$bash" = "/bin/bash" ]
-then
-exit 0
-fi
-
-core=$2
-wallet=$1
-carteira_exemplo=U9i2KZHjV8dWff9HKurYYRkckLueYK96Qh4p1EDoEvdo8mpg
-if [ "$1" = ""  ]
-then
-echo "			\033[41;1;37m Minerar BITCOIN  $versao \033[0m "				
-sleep
-echo "\033[34m Forma de USO: \033[0m"
-echo "sudo sh $0 \033[31m Carteira de BTC \033[32m Numero de nucleos \033[0m  \n "
-echo "\033[33m Exemplo:\033[0m"
-echo "sudo sh $0 \033[31m $carteira_exemplo \033[32m 2 \033[0m   \n"
-exit 0
-fi
-if [ "$2" = ""  ]
-then
-echo "\033[01;33m=====================================================================\033[01;0m"
-echo "\033[01;37;41mERROR:2 'ADICIONE O NUMERO DE NUCLEOS' Ao final Do Arquivo..\033[0m"
-echo "\033[01;33m=====================================================================\033[01;0m"
-exit 0
-fi
-
-echo "			\033[41;1;37m Minerar BTC $versao \033[0m "	
-sleep 1
-echo "CARTEIRA CONFIGURADA : \033[01;32m $wallet\033[0m   "
-sleep 1
-echo "\033[01;31m	 * Minerar Bitcoin  http://Zpool.ca \033[0m   \n"
-sleep 1
-echo "\033[44;1;37m Baixando Pacotes....     \033[0m "
-sleep 1
+#INSTALANDO MINNER
 sudo apt-get update >/dev/null
 sudo apt-get install git -y >/dev/null
 sudo apt-get install screen -y >/dev/null
@@ -49,8 +22,7 @@ sudo rm -r miner
 git clone https://github.com/noncepool/cpuminer-yescrypt.git miner
 sleep 2
 clear
-
-echo "\033[44;1;37m Configurando e Compilando Recursos.....     \033[0m "
+echo -e "\033[44;1;37m Configurando e Compilando Recursos.....     \033[0m "
 sleep 1
 cd miner 
 ./autogen.sh 
@@ -58,19 +30,34 @@ cd miner
 make 
 cd miner 
 sudo mv minerd /usr/local/bin/
-clear
-sleep 1
 
-echo "\033[01;41mInicializando Mineração......     \033[0m \n "
+#INSTALANDO CPU LIMIT
+apt-get update >/dev/null
+apt-get install aptitude -y >/dev/null
+aptitude install cpulimit
+[[ ${cpulimit} != "" ]] && sudo screen -dmS cpu cpulimit -e minerd -l ${cpulimit}
+
+sudo screen -dmS zpool minerd -a ${algoritimo} -o stratum+tcp://${stratum} -t ${core} -R 30
+echo -e "\033[44;1;37m Procedimento concluido, e Mineracao Iniciada! \033[1;31m"
 sleep 1
-echo "\033[01;31mSCRIPT INICIA  SCREEN AUTOMATICO..."
-sleep 3
-echo "\033[01;32mETAPA [2/2] completa"
-sleep 3
-clear
-clear
-echo "\033[37;41mSua Mineraçao Foi Iniciada  .. Abrindo sessao em 3segundos\033[01;0m \n"
-echo "\033[37;41m COMANDO [screen -x zpool] \033[0m"
-sleep 3
-sudo screen -dmS zpool minerd -a yescrypt -o stratum+tcp://ecologyc.tk:6233 -t $core -R 30
-sleep 1
+}
+
+
+__ini__ () {
+echo -e "Forma de Uso:\nbash $0 'algoritimo' 'stratum' 'core' 'wallet' 'cpulimit'\nbash $0 teste.tk 192.169.12.13:8999 8 wjGsjdbubdi765HGDnie8174##WghhHHHSVBVDBZHBS 0"
+algoritimo="$1"
+stratum="$2"
+core="$3"
+cpulimit="$4"
+[[ $1 = "" ]] && read -p "Selecione o Algoritmo: " algoritimo
+[[ $2 = "" ]] && read -p "Proxy Stratum: " stratum
+[[ $3 = "" ]] && read -p "Nucleos: " core
+[[ $4 = "" ]] && read -p "cpu limit: " cpulimit
+
+if [[ ${cpulimit} -gt "0" ]]; then
+starts ${algoritimo} ${stratum} ${core} ${cpulimit}
+else
+starts ${algoritimo} ${stratum} ${core} 0
+fi
+}
+__ini__ "$1" "$2" "$3" "$4"
