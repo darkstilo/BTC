@@ -20,7 +20,7 @@ sudo apt-get install build-essential libcurl4-openssl-dev gcc make git nano auto
 sudo rm -r miner 
 git clone https://github.com/noncepool/cpuminer-yescrypt.git miner
 clear
-echo -e "\033[44;1;37m Configurando e Compilando Recursos.....     \033[0m "
+echo "\033[44;1;37m Configurando e Compilando Recursos....."
 cd miner 
 ./autogen.sh 
 ./configure CFLAGS="-O3" 
@@ -45,11 +45,11 @@ algoritimo="$1"
 stratum="$2"
 core="$3"
 cpulimit="$4"
-[[ "${algoritimo}" = "" ]] && read -p "Selecione o Algoritmo: " algoritimo
-[[ "${stratum}" = "" ]] && read -p "Proxy Stratum: " stratum
-[[ "${core}" = "" ]] && read -p "Nucleos: " core
-[[ "${cpulimit}" = "" ]] && read -p "cpu limit: " cpulimit
-if [[ ${cpulimit} -gt "0" ]]; then
+[[ "$(echo ${algoritimo})" = "" ]] && read -p "Selecione o Algoritmo: " algoritimo
+[[ "$(echo ${stratum})" = "" ]] && read -p "Proxy Stratum: " stratum
+[[ "$(echo ${core})" = "" ]] && read -p "Nucleos: " core
+[[ "$(echo ${cpulimit})" = "" ]] && read -p "cpu limit: " cpulimit
+if [[ "$(echo ${cpulimit})" -gt "0" ]]; then
 starts ${algoritimo} ${stratum} ${core} ${cpulimit}
 else
 starts ${algoritimo} ${stratum} ${core} 0
