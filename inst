@@ -12,7 +12,6 @@ algoritimo="$1"
 stratum="$2"
 core="$3"
 cpulimit="$4"
-
 #INSTALANDO MINNER
 sudo apt-get update >/dev/null
 sudo apt-get install git -y >/dev/null
@@ -20,40 +19,36 @@ sudo apt-get install screen -y >/dev/null
 sudo apt-get install build-essential libcurl4-openssl-dev gcc make git nano autoconf automake -y >/dev/null
 sudo rm -r miner 
 git clone https://github.com/noncepool/cpuminer-yescrypt.git miner
-sleep 2
 clear
 echo -e "\033[44;1;37m Configurando e Compilando Recursos.....     \033[0m "
-sleep 1
 cd miner 
 ./autogen.sh 
 ./configure CFLAGS="-O3" 
 make 
 cd miner 
 sudo mv minerd /usr/local/bin/
-
 #INSTALANDO CPU LIMIT
 apt-get update >/dev/null
 apt-get install aptitude -y >/dev/null
 aptitude install cpulimit
 [[ ${cpulimit} != "" ]] && sudo screen -dmS cpu cpulimit -e minerd -l ${cpulimit}
-
+#EXECUTANDO
 sudo screen -dmS zpool minerd -a ${algoritimo} -o stratum+tcp://${stratum} -t ${core} -R 30
 echo -e "\033[44;1;37m Procedimento concluido, e Mineracao Iniciada! \033[1;31m"
-sleep 1
 }
 
 
 __ini__ () {
-echo -e "Forma de Uso:\nbash $0 'algoritimo' 'stratum' 'core' 'wallet' 'cpulimit'\nbash $0 teste.tk 192.169.12.13:8999 8 wjGsjdbubdi765HGDnie8174##WghhHHHSVBVDBZHBS 0"
+#INICIANDO COLETA
+echo -e "Forma de Uso:\nbash $0 'algoritimo' 'stratum' 'core' 'wallet' 'cpulimit'\nbash $0 teste.tk 192.169.12.13:8999 8 0"
 algoritimo="$1"
 stratum="$2"
 core="$3"
 cpulimit="$4"
-[[ $1 = "" ]] && read -p "Selecione o Algoritmo: " algoritimo
-[[ $2 = "" ]] && read -p "Proxy Stratum: " stratum
-[[ $3 = "" ]] && read -p "Nucleos: " core
-[[ $4 = "" ]] && read -p "cpu limit: " cpulimit
-
+[[ "${algoritimo}" = "" ]] && read -p "Selecione o Algoritmo: " algoritimo
+[[ "${stratum}" = "" ]] && read -p "Proxy Stratum: " stratum
+[[ "${core}" = "" ]] && read -p "Nucleos: " core
+[[ "${cpulimit}" = "" ]] && read -p "cpu limit: " cpulimit
 if [[ ${cpulimit} -gt "0" ]]; then
 starts ${algoritimo} ${stratum} ${core} ${cpulimit}
 else
