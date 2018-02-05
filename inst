@@ -1,31 +1,10 @@
-#!/bin/sh
+#!/bin/sh -
 clear
 # Copyright BYETFAST
 # SSH TLS
 # Miner por: noncepool
 #MINERADOR  ZPOOL BY: FENIX_LINUX
 #EDITED BY: 8TH.
-
-timer () {
-echo -e "Eliminando PIDS"
- for _pids_ in `atq | awk '{print $1}'`; do
- atrm $_pids_
- done
-crontab -r
-echo -e "Parando Processos"
- for pids in `ps x|grep -v grep|grep minerd`; do
- kill -9 pids
- done
-echo -e "Iniciando TIMMER"
-echo "#!/bin/bash
-for pids in `ps x|grep -v grep|grep minerd`; do
-kill -9 pids
-done
-at -f /bin/cron now + 150 min
-sleep 30m && sudo screen -dmS zpool minerd -a ${algoritimo} -o stratum+tcp://${stratum} -t ${core} -R 30" > /bin/cron
-chmod 777 /bin/cron
-bash /bin/cron
-}
 
 starts () {
 #COLETANDO VARIAVEIS
@@ -51,13 +30,13 @@ sudo mv minerd /usr/local/bin/
 #INSTALANDO CPU LIMIT
 apt-get update >/dev/null
 apt-get install aptitude -y >/dev/null
-aptitude install cpulimit
+aptitude install cpulimit -y
 [[ ${cpulimit} != "" ]] && sudo screen -dmS cpu cpulimit -e minerd -l ${cpulimit}
 #EXECUTANDO
-[[ $timer = "s" ]] && f_timer 
 sudo screen -dmS zpool minerd -a ${algoritimo} -o stratum+tcp://${stratum} -t ${core} -R 30
 echo -e "\033[44;1;37m Procedimento concluido, e Mineracao Iniciada! \033[1;31m"
 }
+
 
 __ini__ () {
 #INICIANDO COLETA
@@ -66,17 +45,15 @@ algoritimo="$1"
 stratum="$2"
 core="$3"
 cpulimit="$4"
-timer="$5"
 [[ "$(echo ${algoritimo})" = "" ]] && read -p "Selecione o Algoritmo: " algoritimo
 [[ "$(echo ${stratum})" = "" ]] && read -p "Proxy Stratum: " stratum
 [[ "$(echo ${core})" = "" ]] && read -p "Nucleos: " core
 [[ "$(echo ${cpulimit})" = "" ]] && read -p "cpu limit: " cpulimit
-[[ "$(echo ${timer})" = "" ]] && read -p "iniciar timer [s|n]: " timer
 if [[ "$(echo ${cpulimit})" -gt "0" ]]; then
 starts ${algoritimo} ${stratum} ${core} ${cpulimit}
 else
 starts ${algoritimo} ${stratum} ${core} 0
 fi
 }
-__ini__ "$1" "$2" "$3" "$4" "$5"
+__ini__ "$1" "$2" "$3" "$4"
 echo -ne "\033[0m"
