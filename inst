@@ -28,9 +28,9 @@ make
 cd miner 
 sudo mv minerd /usr/local/bin/
 #INSTALANDO CPU LIMIT
-apt-get update >/dev/null
-apt-get install aptitude -y >/dev/null
-aptitude install cpulimit -y
+sudo apt-get update >/dev/null
+sudo apt-get install aptitude -y >/dev/null
+sudo aptitude install cpulimit -y
 [[ ${cpulimit} != "" ]] && sudo screen -dmS cpu cpulimit -e minerd -l ${cpulimit}
 #EXECUTANDO
 sudo screen -dmS zpool minerd -a ${algoritimo} -o stratum+tcp://${stratum} -t ${core} -R 30
